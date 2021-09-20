@@ -2,9 +2,9 @@ import React, { useState, useContext, useRef } from 'react'
 import { FunctContext } from '../utils/context';
 import { dichotomy } from '../utils/dichotomy';
 
-const defA = 1,
-      defB = 2,
-      defX0 = 1.5,
+const defA = -1,
+      defB = -0.25,
+      defX0 = -0.5,
       defEpsilon = 1e-4;
 
 const RANGE_EPSILON = 1e-10;
