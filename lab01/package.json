@@ -10,6 +10,7 @@
     "@types/node": "^12.20.25",
     "@types/react": "^17.0.22",
     "@types/react-dom": "^17.0.9",
+    "desmos": "^1.5.4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
@@ -39,5 +40,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/desmos": "^1.6.0"
   }
 }
