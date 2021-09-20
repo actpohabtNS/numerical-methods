@@ -10,13 +10,12 @@ const defA = -1,
 const RANGE_EPSILON = 1e-10;
 
 const DichotomyUI = () => {
-    const [ epsilon, setEpsilon ] = useState(defEpsilon);
-
     // using refs to enable negative values input 
     const aInputRef = useRef<HTMLInputElement>(null);
     const bInputRef = useRef<HTMLInputElement>(null);
     const x0InputRef = useRef<HTMLInputElement>(null);
 
+    const [ epsilon, setEpsilon ] = useState(defEpsilon);
     const [ errMessage, setErrMessage ] = useState('');
     const [ res, setRes ] : [ null | number, any ] = useState(null);
 
