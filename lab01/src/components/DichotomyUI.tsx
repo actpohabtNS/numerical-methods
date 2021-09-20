@@ -28,6 +28,7 @@ const DichotomyUI = () => {
             b = bInputRef.current!.valueAsNumber;
 
         try {
+            setErrMessage('');
             setRes(dichotomy(x0, a, b, epsilon, f));
         } catch (e : any) {
             setErrMessage(e.message);
