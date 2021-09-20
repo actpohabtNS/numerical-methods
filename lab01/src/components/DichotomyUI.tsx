@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useRef } from 'react'
 import { FunctContext } from '../utils/context';
 import { dichotomy } from '../utils/dichotomy';
 
@@ -10,10 +10,12 @@ const defA = 1,
 const RANGE_EPSILON = 1e-10;
 
 const DichotomyUI = () => {
-    const [ a, setA ] = useState(defA);
-    const [ b, setB ] = useState(defB);
-    const [ x0, setX0 ] = useState(defX0);
     const [ epsilon, setEpsilon ] = useState(defEpsilon);
+
+    // using refs to enable negative values input 
+    const aInputRef = useRef<HTMLInputElement>(null);
+    const bInputRef = useRef<HTMLInputElement>(null);
+    const x0InputRef = useRef<HTMLInputElement>(null);
 
     const [ errMessage, setErrMessage ] = useState('');
     const [ res, setRes ] : [ null | number, any ] = useState(null);
@@ -21,6 +23,10 @@ const DichotomyUI = () => {
     const { f } = useContext(FunctContext);
 
     const handleDichotomy = () => {
+        let x0 = x0InputRef.current!.valueAsNumber,
+            a = aInputRef.current!.valueAsNumber,
+            b = bInputRef.current!.valueAsNumber;
+
         try {
             setRes(dichotomy(x0, a, b, epsilon, f));
         } catch (e : any) {
@@ -39,10 +45,9 @@ const DichotomyUI = () => {
                     </div>
                     <div className="col-auto me-5">
                         <input
-                            value={a}
-                            onChange={e => setA(e.target.valueAsNumber)}
+                            defaultValue={defA}
+                            ref={aInputRef}
                             step={RANGE_EPSILON}
-                            max={b}
                             type="number" id="range-a" className="form-control"
                         />
                     </div>
@@ -52,10 +57,9 @@ const DichotomyUI = () => {
                     </div>
                     <div className="col-auto">
                         <input
-                            value={b}
-                            onChange={e => setB(e.target.valueAsNumber)}
+                            defaultValue={defB}
+                            ref={bInputRef}
                             step={RANGE_EPSILON}
-                            min={a}
                             type="number" id="range-b" className="form-control"
                         />
                     </div>
@@ -70,6 +74,7 @@ const DichotomyUI = () => {
                             value={epsilon}
                             onChange={e => setEpsilon(e.target.valueAsNumber)}
                             step={defEpsilon}
+                            min={0}
                             type="number" id="range-epsilon" className="form-control"
                         />
                     </div>
@@ -79,8 +84,8 @@ const DichotomyUI = () => {
                     </div>
                     <div className="col-auto me-5">
                         <input
-                            value={x0}
-                            onChange={e => setX0(e.target.valueAsNumber)}
+                            defaultValue={defX0}
+                            ref={x0InputRef}
                             step={defEpsilon}
                             type="number" id="x0" className="form-control"
                         />
