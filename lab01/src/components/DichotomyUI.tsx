@@ -2,9 +2,9 @@ import React, { useState, useContext, useRef } from 'react'
 import { FunctContext } from '../utils/context';
 import { dichotomy } from '../utils/dichotomy';
 
-const defA = -1,
-      defB = -0.25,
-      defX0 = -0.5,
+const defA = -2,
+      defB = 5,
+      defX0 = 3,
       defEpsilon = 1e-4;
 
 const RANGE_EPSILON = 1e-10;
@@ -104,7 +104,7 @@ const DichotomyUI = () => {
             ? (<div className="alert alert-danger" role="alert">
                     Error: { errMessage }
                 </div>)
-            : res && (<div className="alert alert-success" role="alert">
+            : res != null && (<div className="alert alert-success" role="alert">
                     x* = { res }
                 </div>)}
         </>
