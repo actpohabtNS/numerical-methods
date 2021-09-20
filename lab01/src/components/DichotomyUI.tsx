@@ -7,9 +7,9 @@ const defA = 1,
 const RANGE_EPSILON = 1e-10;
 
 const DichotomyUI = () => {
-const [ a, setA ] = useState(defA);
-const [ b, setB ] = useState(defB);
-const [ epsilon, setEpsilon ] = useState(defEpsilon);
+    const [ a, setA ] = useState(defA);
+    const [ b, setB ] = useState(defB);
+    const [ epsilon, setEpsilon ] = useState(defEpsilon);
 
     return (
         <form className="d-flex flex-column align-items-center">
@@ -23,7 +23,6 @@ const [ epsilon, setEpsilon ] = useState(defEpsilon);
                     <input
                         value={a}
                         onChange={e => setA(e.target.valueAsNumber)}
-                        defaultValue={defA}
                         step={RANGE_EPSILON}
                         max={b}
                         type="number" id="range-a" className="form-control"
@@ -35,8 +34,7 @@ const [ epsilon, setEpsilon ] = useState(defEpsilon);
                 </div>
                 <div className="col-auto">
                     <input
-                         onChange={e => setB(e.target.valueAsNumber)}
-                        defaultValue={defB}
+                        onChange={e => setB(e.target.valueAsNumber)}
                         step={RANGE_EPSILON}
                         min={a}
                         type="number" id="range-b" className="form-control"
@@ -52,7 +50,6 @@ const [ epsilon, setEpsilon ] = useState(defEpsilon);
                     <input
                         value={epsilon}
                         onChange={e => setEpsilon(e.target.valueAsNumber)}
-                        defaultValue={defEpsilon}
                         step={defEpsilon}
                         type="number" id="range-epsilon" className="form-control"
                     />

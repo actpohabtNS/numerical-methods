@@ -26,7 +26,6 @@ const IterationUI = () => {
                     <input
                         value={a}
                         onChange={e => setA(e.target.valueAsNumber)}
-                        defaultValue={defA}
                         step={RANGE_EPSILON}
                         max={b}
                         type="number" id="range-a" className="form-control"
@@ -39,7 +38,6 @@ const IterationUI = () => {
                 <div className="col-auto">
                     <input
                         onChange={e => setB(e.target.valueAsNumber)}
-                        defaultValue={defB}
                         step={RANGE_EPSILON}
                         min={a}
                         type="number" id="range-b" className="form-control"
@@ -55,7 +53,6 @@ const IterationUI = () => {
                     <input
                         value={x0}
                         onChange={e => setX0(e.target.valueAsNumber)}
-                        defaultValue={defX0}
                         step={defEpsilon}
                         type="number" id="x0" className="form-control"
                     />
@@ -68,7 +65,6 @@ const IterationUI = () => {
                     <input
                         value={epsilon}
                         onChange={e => setEpsilon(e.target.valueAsNumber)}
-                        defaultValue={defEpsilon}
                         step={defEpsilon}
                         type="number" id="epsilon" className="form-control"
                     />
