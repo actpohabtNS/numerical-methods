@@ -2,6 +2,7 @@ export const functs = {
     f: (x : number) => x ** 3 + 4 * Math.sin(x),
     der1F: (x : number) => 3 * x ** 2 + 4 * Math.cos(x),
     sigma: (x: number) => Math.asin(- (x**3) / 4),
+    sigmaStr: "arcsin(-(x^3) / 4)",
     derSigma: (x: number) => - (3 * x**2) / (4 * Math.sqrt(1 - (x**6) / 16)),
     maxModDerSig: (a: number, b: number) => {
         if (a > b) {
