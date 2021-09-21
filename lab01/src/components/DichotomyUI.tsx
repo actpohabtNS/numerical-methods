@@ -73,7 +73,7 @@ const DichotomyUI = () => {
                         <input
                             value={epsilon}
                             onChange={e => setEpsilon(e.target.valueAsNumber)}
-                            step={defEpsilon}
+                            step={RANGE_EPSILON}
                             min={0}
                             type="number" id="range-epsilon" className="form-control"
                         />
@@ -94,7 +94,7 @@ const DichotomyUI = () => {
 
                 <button
                     onClick={handleDichotomy}
-                    type="button" className="btn btn-success px-5"
+                    type="submit" className="btn btn-success px-5"
                 >
                     Run
                 </button>
