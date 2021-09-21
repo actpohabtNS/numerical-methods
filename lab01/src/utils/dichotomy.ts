@@ -1,4 +1,4 @@
-export function dichotomy(x0: number, a: number, b: number, epsilon: number, f: (x: number) => number) {
+export default function dichotomy(x0: number, a: number, b: number, epsilon: number, f: (x: number) => number) {
   if (a > b) {
     throw new Error("a must be equal or bigger that b! ([a, b])");
   }

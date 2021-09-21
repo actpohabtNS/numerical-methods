@@ -1,6 +1,6 @@
 import React, { useState, useContext, useRef } from 'react'
 import { FunctContext } from '../utils/context';
-import { dichotomy } from '../utils/dichotomy';
+import dichotomy from '../utils/dichotomy';
 
 const defA = -2,
       defB = 5,
