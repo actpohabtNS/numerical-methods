@@ -20,7 +20,7 @@ const IterationUI = () => {
     const [ errMessage, setErrMessage ] = useState('');
     const [ res, setRes ] : [ null | number, any ] = useState(null);
 
-    const { sigma, sigmaStr, maxModDerSig } = useContext(FunctContext);
+    const { sigma, sigmaStr, sigmaArgInBounds, maxModDerSig } = useContext(FunctContext);
 
     const handleIteration = () => {
         let x0 = x0InputRef.current!.valueAsNumber,
@@ -29,7 +29,7 @@ const IterationUI = () => {
 
         try {
             setErrMessage('');
-            setRes(iteration(x0, a, b, epsilon, sigma, maxModDerSig));
+            setRes(iteration(x0, a, b, epsilon, sigma, sigmaArgInBounds, maxModDerSig));
         } catch (e : any) {
             setErrMessage(e.message);
         }
@@ -97,7 +97,7 @@ const IterationUI = () => {
 
                 <button
                     onClick={handleIteration}
-                    type="button" className="btn btn-success px-5 mb-5"
+                    type="submit" className="btn btn-success px-5 mb-5"
                 >
                     Run
                 </button>
