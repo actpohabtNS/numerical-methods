@@ -1,6 +1,7 @@
 import React, { useState, useContext, useRef } from 'react'
 import { FunctContext } from '../utils/context';
 import dichotomy from '../utils/dichotomy';
+import { resultType } from '../utils/resultType';
 
 const defA = -2,
       defB = 5,
@@ -17,7 +18,7 @@ const DichotomyUI = () => {
 
     const [ epsilon, setEpsilon ] = useState(defEpsilon);
     const [ errMessage, setErrMessage ] = useState('');
-    const [ res, setRes ] : [ null | number, any ] = useState(null);
+    const [ res, setRes ] = useState<null | resultType>(null);
 
     const { f } = useContext(FunctContext);
 
@@ -105,7 +106,7 @@ const DichotomyUI = () => {
                     Error: { errMessage }
                 </div>)
             : res != null && (<div className="alert alert-success" role="alert">
-                    x* = { res }
+                    x* = { res.res }, took { res.iterations } iterations! (Must have taken { res.formulaIters } iterations!)
                 </div>)}
         </>
     )
