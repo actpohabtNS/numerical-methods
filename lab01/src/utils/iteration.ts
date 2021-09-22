@@ -20,12 +20,12 @@ export default function iteration(x0: number,
         throw new Error("Condition (|sigma(x0) - x0| <= (1 - q) * delta) has not been met! Choose other sigma, [a, b] or x0!");
     }
 
-    console.log(`epsilon: ${epsilon}, q: ${q}, delta: ${delta}`);
-    
+    let x_prev: number;
 
     do {
+        x_prev = x0;
         x0 = sigma(x0);
-    } while (Math.abs(sigma(x0)) > epsilon);
+    } while (Math.abs(x_prev - x0) > epsilon);
 
     return x0;
 }
