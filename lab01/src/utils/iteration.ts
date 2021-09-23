@@ -1,10 +1,12 @@
+import { resultType } from "./resultType";
+
 export default function iteration(x0: number,
                                   a: number,
                                   b: number,
                                   epsilon: number,
                                   sigma: (x: number) => number,
                                   sigmaArgInBounds: (x: number) => boolean,
-                                  maxModDerSig: (a: number, b: number) => number) {
+                                  maxModDerSig: (a: number, b: number) => number) : resultType {
     if (!sigmaArgInBounds(a) || !sigmaArgInBounds(b)) {
         throw new Error("a and b must be in bounds of sigma!");
     }
@@ -21,11 +23,15 @@ export default function iteration(x0: number,
     }
 
     let x_prev: number;
+    let iterations = 1;
+    
+    const formulaIters = Math.ceil(Math.log(Math.abs(sigma(x0) - x0) / (1 - q) * epsilon) / Math.log(1 / q)) + 1;
 
     do {
         x_prev = x0;
         x0 = sigma(x0);
+        iterations++;
     } while (Math.abs(x_prev - x0) > epsilon);
 
-    return x0;
+    return { res: x0, iterations, formulaIters };
 }
