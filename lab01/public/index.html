@@ -21,7 +21,7 @@
     <script>
       setTimeout(() => {
         const elt = document.getElementById('calculator');
-        let calculator = Desmos.GraphingCalculator(elt, { expressions: false, zoomButtons: false, settingsMenu: false });
+        let calculator = Desmos.GraphingCalculator(elt, { expressions: false, settingsMenu: false });
         calculator.setExpression({ id: 'graph1', latex: 'y=x^3+4\\sin(x)' });
         calculator.setMathBounds({
           left: -2,

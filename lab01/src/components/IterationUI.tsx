@@ -1,6 +1,7 @@
 import React, { useState, useRef, useContext } from 'react'
 import { FunctContext } from '../utils/context';
 import iteration from '../utils/iteration';
+import { resultType } from '../utils/resultType';
 
 const defA = -1,
       defB = 1,
@@ -18,7 +19,7 @@ const IterationUI = () => {
 
     const [ epsilon, setEpsilon ] = useState(defEpsilon);
     const [ errMessage, setErrMessage ] = useState('');
-    const [ res, setRes ] : [ null | number, any ] = useState(null);
+    const [ res, setRes ] = useState<null | resultType>(null);
 
     const { sigma, sigmaStr, sigmaArgInBounds, maxModDerSig } = useContext(FunctContext);
 
@@ -108,7 +109,7 @@ const IterationUI = () => {
                     Error: { errMessage }
                 </div>)
             : res != null && (<div className="alert alert-success" role="alert">
-                    x* = { res }
+                    x* = { res.res }, took { res.iterations } iterations! (Must have taken { res.formulaIters } iterations!)
                 </div>)}
         </> 
     )
