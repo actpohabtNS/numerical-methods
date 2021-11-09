@@ -1,6 +1,6 @@
 import { fixPrec } from "./helpers.js";
 
-export const genMatrix = (n) => {
+export const genMatrix = (n, diagBase = 1) => {
   let matrix = new Array();
 
   for (let i = 0; i < n; i++) {
@@ -13,7 +13,7 @@ export const genMatrix = (n) => {
           row[j] = 1;
           break;
         case i:
-          row[j] = fixPrec(1 + j * 0.1);
+          row[j] = fixPrec(diagBase + j * 0.1);
           break;
         default:
           break;
@@ -23,6 +23,7 @@ export const genMatrix = (n) => {
   }
 
   matrix[0][n-1] = 1;
+  matrix[0][0] = diagBase;
   return matrix;
 }
 
@@ -32,4 +33,8 @@ export const genVector = (n) => {
     vec[i] = Math.sin(Math.PI / n - i)
   }
   return vec
+}
+
+export const genXFirst = (n, eq = 0) => {
+  return new Array(n).fill(eq);
 }

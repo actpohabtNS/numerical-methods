@@ -22,6 +22,17 @@ export const mmul = (m1, m2) => {
   return fixMatrPrec(matr3.to2DArray());
 }
 
+export const vsubt = (v1, v2) => {
+  if (v1.length != v2.length) {
+    throw new Error("Vectors must have equal length when subtracting!");
+  }
+  let res = new Array(v1.length);
+  for (let i = 0; i < v1.length; i++) {
+    res[i] = fixPrec(v1[i] - v2[i]);
+  }
+  return res;
+}
+
 export const mvmul = (m, v) => {
   const matr = new Matrix(m)
   const vec = Matrix.columnVector(v)
@@ -43,4 +54,8 @@ export const firstMNorm = (m) => {
   }
 
   return max;
+}
+
+export const continuousVNorm = (vec) => {
+  return vec.reduce((max, val) => Math.abs(val) > max ? Math.abs(val) : max, -Infinity)
 }
