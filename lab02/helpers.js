@@ -29,3 +29,18 @@ export const mvmul = (m, v) => {
 
   return fixArrPrec(res.to2DArray());
 }
+
+export const firstMNorm = (m) => {
+  const matrM = new Matrix(m);
+  let max = -Infinity;
+
+  for (let col = 0; col < matrM.columns; col++) {
+    const sum = matrM.getColumn(col).reduce((acc, curr) => acc + curr);
+
+    if (sum > max) {
+      max = sum;
+    }
+  }
+
+  return max;
+}

@@ -1,5 +1,6 @@
 import { printVector, printMatrix } from "./print.js";
-import { eye, swapRows, fixPrec, mmul, mvmul } from "./helpers.js";
+import { eye, swapRows, fixPrec, mmul, mvmul, firstMNorm } from "./helpers.js";
+import { Matrix } from "ml-matrix";
 
 const findBiggestColumn = (matrix, col) => {
   if (matrix.length - 1 < col) {
@@ -49,15 +50,30 @@ const solveTriangular = (a, b) => {
   return x
 }
 
+const solveMatricies = (a, b) => {
+  const matrB = new Matrix(b);
+  const x_cols = []
+
+  for (let col = 0; col < matrB.columns; col++) {
+    x_cols.push(solveTriangular(a, matrB.getColumn(col)))
+  }
+
+  const x_trans = new Matrix(x_cols)
+  return x_trans.transpose().to2DArray()
+}
+
 export const solveGauss = (a, b) => {
   let matrA = a
   let l = 0;
   let acc_det = 1;
+  let e = eye(b.length);
+
   for (let itr = 0; itr < a.length; itr++) {
     const biggestElemIdx = findBiggestColumn(matrA, itr);
     if (biggestElemIdx != itr) {
       l++;
       swapRows(matrA, biggestElemIdx, itr);
+      swapRows(e, biggestElemIdx, itr);
       [b[biggestElemIdx], b[itr]] = [b[itr], b[biggestElemIdx]];
     }
     acc_det *= matrA[itr][itr];
@@ -66,15 +82,18 @@ export const solveGauss = (a, b) => {
 
     matrA = mmul(m, matrA)
     b = mvmul(m, b);
+    e = mmul(m, e);
   }
 
-  printMatrix(matrA);
-  console.log("");
-  printVector(b, false);
-  console.log("");
+  // printMatrix(matrA);
+  // console.log("");
+  // printVector(b, false);
+  // console.log("");
 
-  console.log('det(A) equals', (-1)**l * acc_det);
-  console.log("");
+  const detA = (-1)**l * acc_det;
+  const invA = solveMatricies(matrA, e);
+  const solution = solveTriangular(matrA, b);
+  const condA = firstMNorm(a) * firstMNorm(invA);
 
-  return solveTriangular(matrA, b)
+  return { solution, detA, invA, condA }
 }
