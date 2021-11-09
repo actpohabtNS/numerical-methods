@@ -1,6 +1,10 @@
 import { Matrix } from 'ml-matrix';
 import { printVector, printMatrix } from './helpers.js';
 
+const fixPrec = (n) => Number.parseFloat(Number(n).toFixed(15))
+const fixArrPrec = (arr) => arr.map((el) => fixPrec(el))
+const fixMatrPrec = (matr) => matr.map((arr) => fixArrPrec(arr))
+
 const genMatrix = (n) => {
   let matrix = new Array();
 
@@ -14,7 +18,7 @@ const genMatrix = (n) => {
           row[j] = 1;
           break;
         case i:
-          row[j] = Number.parseFloat(Number(1 + j * 0.1).toFixed(1));
+          row[j] = fixPrec(1 + j * 0.1);
           break;
         default:
           break;
@@ -67,7 +71,7 @@ const mmul = (m1, m2) => {
   const matr2 = new Matrix(m2)
   const matr3 = matr1.mmul(matr2)
 
-  return matr3.to2DArray();
+  return fixMatrPrec(matr3.to2DArray());
 }
 
 const mvmul = (m, v) => {
@@ -75,7 +79,7 @@ const mvmul = (m, v) => {
   const vec = Matrix.columnVector(v)
   const res = matr.mmul(vec)
 
-  return res.to2DArray();
+  return fixArrPrec(res.to2DArray());
 }
 
 const makeM = (matrix, col) => {
@@ -92,29 +96,53 @@ const makeM = (matrix, col) => {
   return m;
 }
 
+const solveTriangular = (a, b) => {
+  let x = new Array(b.length)
+
+  for (let row = a.length - 1; row >= 0; row--) {
+    let acc_sum = 0;
+
+    for (let col = a.length - 1; col >= row + 1; col--) {
+      acc_sum += x[col] * a[row][col]
+    }
+
+    x[row] = fixPrec(b[row] - acc_sum);
+  }
+
+  return x
+}
+
 const solveGauss = (a, b) => {
   let matrA = a
+  let l = 0;
+  let acc_det = 1;
   for (let itr = 0; itr < a.length; itr++) {
     const biggestElemIdx = findBiggestColumn(matrA, itr);
-    swapRows(matrA, biggestElemIdx, itr);
-    [b[biggestElemIdx], b[itr]] = [b[itr], b[biggestElemIdx]];
+    if (biggestElemIdx != itr) {
+      l++;
+      swapRows(matrA, biggestElemIdx, itr);
+      [b[biggestElemIdx], b[itr]] = [b[itr], b[biggestElemIdx]];
+    }
+    acc_det *= matrA[itr][itr];
+
     const m = makeM(matrA, itr);
-    printVector(b, false, 2);
-    console.log("");
 
     matrA = mmul(m, matrA)
     b = mvmul(m, b);
   }
 
-  printVector(b, false, 2);
+  printMatrix(matrA);
   console.log("");
-  return matrA
+  printVector(b, false);
+  console.log("");
+
+  console.log('det(A) equals', (-1)**l * acc_det);
+
+  return solveTriangular(matrA, b)
 }
 
 const m = genMatrix(10);
 const testM = [[10, 0, 3], [3, -1, 0], [-2, 4, 1]];
 const b = [7, 2, 1];
-printMatrix(solveGauss(testM, b));
+printVector(solveGauss(testM, b));
 console.log("");
-//printVector(genVector(10));
-//console.log(findBiggestColumn(m, 9))

@@ -1,11 +1,11 @@
-export const printMatrix = (m, precision = 1) => {
+export const printMatrix = (m) => {
   m.forEach(row => {
-    printVector(row, true, precision)
+    printVector(row, true)
     console.log("");
   });
 }
 
-export const printVector = (v, row = true, precision = 1) => {
-  v.forEach(el => row ? process.stdout.write(`${Number.parseFloat(el).toFixed(precision)}  `) : console.log(Number.parseFloat(el).toFixed(precision)))
+export const printVector = (v, row = true) => {
+  v.forEach(el => row ? process.stdout.write(`${el}  `) : console.log(el))
 }
 
