@@ -46,8 +46,8 @@ const jacobiTask = () => {
 }
 
 const main = () => {
-  //gaussTask();
-  jacobiTask();
+  gaussTask();
+  //jacobiTask();
 }
 
 main();
