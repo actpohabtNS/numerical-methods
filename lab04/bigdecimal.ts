@@ -11,23 +11,23 @@ export class BigDecimal {
                                    .slice(0, BigDecimal.DECIMALS)) 
                 + BigInt(BigDecimal.ROUNDED && decis[BigDecimal.DECIMALS] >= "5");
   }
-  static fromBigInt(bigint : bigint) {
+  static fromBigInt(bigint : bigint) : BigDecimal {
       return Object.assign(Object.create(BigDecimal.prototype), { _n: bigint });
   }
-  add(num : string | number) {
+  add(num : BigDecimal | string | number) : BigDecimal {
       return BigDecimal.fromBigInt(this._n + new BigDecimal(num)._n);
   }
-  subtract(num : string) {
+  subtract(num : BigDecimal | string | number) : BigDecimal {
       return BigDecimal.fromBigInt(this._n - new BigDecimal(num)._n);
   }
-  static _divRound(dividend : bigint, divisor : bigint) {
+  static _divRound(dividend : bigint, divisor : bigint) : BigDecimal {
       return BigDecimal.fromBigInt(dividend / divisor 
           + (BigDecimal.ROUNDED ? dividend  * BigInt(2) / divisor % BigInt(2) : BigInt(0)));
   }
-  multiply(num : string) {
+  multiply(num : BigDecimal | string | number) : BigDecimal {
       return BigDecimal._divRound(this._n * new BigDecimal(num)._n, BigDecimal.SHIFT);
   }
-  divide(num : string) {
+  divide(num : BigDecimal | string | number) : BigDecimal {
       return BigDecimal._divRound(this._n * BigDecimal.SHIFT, new BigDecimal(num)._n);
   }
   toString() {
