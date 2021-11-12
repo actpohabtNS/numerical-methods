@@ -1,0 +1,1 @@
+export const fixPrec = (n : number) => Number.parseFloat(Number(n).toFixed(15))

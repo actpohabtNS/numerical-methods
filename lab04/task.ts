@@ -1,3 +1,6 @@
+import { BigDecimal } from './bigdecimal';
+import { fixPrec } from './fix'
+
 const f = (x : number) => Math.E**(-(x**2))
 
 const LOWER_LIMIT =  -2;
@@ -13,9 +16,9 @@ const genEvenlyTable = (n : number) : polinomialTable_T => {
   let points = new Array();
   let f_vals = new Array();
 
-  for (let p = LOWER_LIMIT; p < UPPER_LIMIT; p += step) {
-    points.push(p);
-    f_vals.push(f(p));
+  for (let p = new BigDecimal(LOWER_LIMIT); p < new BigDecimal(UPPER_LIMIT); p = p.add(step)) {
+    points.push(p.toNumber());
+    f_vals.push(f(p.toNumber()));
   }
 
   return { points, f_vals };
