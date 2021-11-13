@@ -1,7 +1,7 @@
 import prompt from 'prompt-sync'
 
 import { createEvenNewtonPolynom, createEvenNewtonPolynomStr } from './evenInterpolation'
-import { createLagrangePolynom, createNewtonPolynom, createNewtonPolynomStr } from './interpolation'
+import { createLagrangePolynom, createLagrangePolynomStr, createNewtonPolynom, createNewtonPolynomStr } from './interpolation'
 import task from "./task"
 import { polinomialTable_T } from './types';
 
@@ -26,7 +26,7 @@ const main = () => {
   //upto n = 23
   const nepl_x  = nepl(x);
 
-  console.log(`f(${x}) =`, f_x);
+  console.log(`\nf(${x}) =`, f_x);
   console.log(`F_Lagrange(${x}) =`, lpl_x, `, deviation is ${Math.abs(f_x - lpl_x)}`);
   console.log(`F_Newton(${x}) =`, npl_x, `, deviation is ${Math.abs(f_x - npl_x)}`);
   //upto n = 23
@@ -39,18 +39,26 @@ const main = () => {
 const graphs = (table : polinomialTable_T, evTable : polinomialTable_T) => {
   console.log("\nGraphs: ");
   
+  console.log("Lagrange:");
+  console.log(createLagrangePolynomStr(table));
+
   //also can be used as inverted interpolation
+  console.log("\nNewton:");
   console.log(createNewtonPolynomStr(table));
+  
+  console.log("\nNewton Evenly Distributed:");
+  console.log(createEvenNewtonPolynomStr(evTable));
 }
 
 const test = () => {
   
-  const table = task.genTable(5);
+  const table = task.genTable(15);
+  const evTable = task.genEvenlyTable(5);
   console.log(table);
-  console.log(createNewtonPolynomStr(table));
-  console.log(createEvenNewtonPolynomStr(table));
+  console.log(createLagrangePolynomStr(table));
+  // console.log(createEvenNewtonPolynomStr(evTable));
 }
 
-test();
+//test();
 
-//main();
+main();

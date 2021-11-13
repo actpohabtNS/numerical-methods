@@ -62,7 +62,7 @@ export const createEvenNewtonPolynomStr = (poliTable : polinomialTable_T) : stri
   const h = new BigDecimal(points[1]).subtract(points[0]).toNumber().toFixed(5);
   
   let p0 = points[0];
-  const t = "((x" + (p0 < 0 ? "" : "+") + p0.toFixed(5) + ") /" + h + ")";
+  const t = "((x" + (p0 < 0 ? "+" : "") + Math.abs(p0).toFixed(5) + ") /" + h + ")";
 
   let res = "";
   for (let i = 0; i < points.length; i++) {
@@ -73,5 +73,5 @@ export const createEvenNewtonPolynomStr = (poliTable : polinomialTable_T) : stri
     res += addition;
   }
 
-  return `(${res})*${h} - ${p0}`;
+  return res;
 }

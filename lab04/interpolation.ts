@@ -28,6 +28,32 @@ export const createLagrangePolynom = (poliTable : polinomialTable_T) : ((x : num
   }
 }
 
+
+export const createLagrangePolynomStr = (poliTable : polinomialTable_T) : string => {
+  const { points, f_vals } = poliTable;
+    let res = "";
+
+    for (let i = 0; i < points.length; i++) {
+      let addition = "+" + f_vals[i].toFixed(5);
+      let numerator = "",
+          denominator = new BigDecimal(1);
+
+      for (let j = 0; j < points.length; j++) {
+        if (i === j) {
+          continue;
+        }
+        let pJNeg = points[j] < 0;
+        numerator += `(x${pJNeg ? "+" : "-"}${Number(Math.abs(points[j]).toFixed(5))})`;
+        denominator = denominator.multiply(new BigDecimal(points[i]).subtract(points[j]));
+      }
+
+      addition += `(${numerator}) / (${denominator.toString()})`;
+      res += addition;
+    }
+
+    return res;
+}
+
 const calcDivDif = (divDifs : Array<number>, points : Array<number> , pow : number) : Array<number> => {
   let res = new Array<number>();
 
