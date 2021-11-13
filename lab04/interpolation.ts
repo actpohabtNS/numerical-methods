@@ -1,4 +1,5 @@
 import { BigDecimal } from "./bigdecimal";
+import { fixPrec } from "./fix";
 import { polinomialTable_T } from "./types";
 
 export const createLagrangePolynom = (poliTable : polinomialTable_T) : ((x : number) => number) => {
@@ -31,7 +32,7 @@ const calcDivDif = (divDifs : Array<number>, points : Array<number> , pow : numb
   let res = new Array<number>();
 
   for (let i = 0; i < divDifs.length - 1; i++) {
-    let num = new BigDecimal(divDifs[i+1]).subtract(divDifs[i]);
+    let num = new BigDecimal(fixPrec(divDifs[i+1])).subtract(fixPrec(divDifs[i]));
     let denom = new BigDecimal(points[i+pow]).subtract(points[i]);
     res.push(num.divide(denom).toNumber());
   }

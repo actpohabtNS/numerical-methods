@@ -6,6 +6,8 @@ export class BigDecimal {
   _n! : bigint;
   constructor(value : BigDecimal | string | number) {
       if (value instanceof BigDecimal) return value;
+      if (typeof value === "string") value = +value;
+      if (typeof value === "number") value = value.toFixed(15);;
       let [ints, decis] = String(value).split(".").concat("");
       this._n = BigInt(ints + decis.padEnd(BigDecimal.DECIMALS, "0")
                                    .slice(0, BigDecimal.DECIMALS)) 
@@ -31,7 +33,9 @@ export class BigDecimal {
       return BigDecimal._divRound(this._n * BigDecimal.SHIFT, new BigDecimal(num)._n);
   }
   toString() {
-      const s = this._n.toString().padStart(BigDecimal.DECIMALS+1, "0");
+      let s = this._n.valueOf() > 0 ? "" : "-"; 
+      s += this._n.toString().replace('-', '').padStart(BigDecimal.DECIMALS+1, "0");
+      
       return s.slice(0, -BigDecimal.DECIMALS) + "." + s.slice(-BigDecimal.DECIMALS)
               .replace(/\.?0+$/, "");
   }

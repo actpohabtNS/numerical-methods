@@ -37,15 +37,13 @@ const factorial = (n : number) : number => {
 
 const createNewtonPolynom = (points : Array<number>, difCoefs : Array<number>) : ((x : number) => number) => {
   const h = new BigDecimal(points[1]).subtract(points[0]).toNumber();
-  console.log("h", h);
   
   return (x : number) => {
     const t = new BigDecimal(x).subtract(points[0]).divide(h);
-    console.log("t", t.toNumber());
 
     let res = new BigDecimal(0);
     for (let i = 0; i < points.length; i++) {
-      let addition = new BigDecimal(difCoefs[i]).divide(factorial(i));
+      let addition = new BigDecimal(fixPrec(difCoefs[i])).divide(factorial(i));
       for (let j = 0; j < i; j++) {
         addition = addition.multiply(t.subtract(j));
       }
