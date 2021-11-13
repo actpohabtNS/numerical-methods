@@ -1,10 +1,9 @@
 import prompt from 'prompt-sync'
-import { BigDecimal } from './bigdecimal'
 
-import createEvenNewtonPolynom from './evenInterpolation'
-import { fixPrec } from './fix'
-import { createLagrangePolynom, createNewtonPolynom } from './interpolation'
+import { createEvenNewtonPolynom, createEvenNewtonPolynomStr } from './evenInterpolation'
+import { createLagrangePolynom, createNewtonPolynom, createNewtonPolynomStr } from './interpolation'
 import task from "./task"
+import { polinomialTable_T } from './types';
 
 const main = () => {
   const pt = prompt({ sigint: true });
@@ -31,7 +30,27 @@ const main = () => {
   console.log(`F_Lagrange(${x}) =`, lpl_x, `, deviation is ${Math.abs(f_x - lpl_x)}`);
   console.log(`F_Newton(${x}) =`, npl_x, `, deviation is ${Math.abs(f_x - npl_x)}`);
   //upto n = 23
-  console.log(`F_EvenlyNewton(${x}) =`, nepl_x, `, deviation is ${Math.abs(f_x - nepl_x)}`);  
+  console.log(`F_EvenlyNewton(${x}) =`, nepl_x, `, deviation is ${Math.abs(f_x - nepl_x)}`);
+
+  //check function interpolation accuracy using graphs
+  graphs(table, evTable);
 }
 
-main();
+const graphs = (table : polinomialTable_T, evTable : polinomialTable_T) => {
+  console.log("\nGraphs: ");
+  
+  //also can be used as inverted interpolation
+  console.log(createNewtonPolynomStr(table));
+}
+
+const test = () => {
+  
+  const table = task.genTable(5);
+  console.log(table);
+  console.log(createNewtonPolynomStr(table));
+  console.log(createEvenNewtonPolynomStr(table));
+}
+
+test();
+
+//main();

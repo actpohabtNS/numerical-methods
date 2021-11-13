@@ -75,3 +75,22 @@ export const createNewtonPolynom = (poliTable : polinomialTable_T) : ((x : numbe
     return res.toNumber();
   }
 }
+
+export const createNewtonPolynomStr = (poliTable : polinomialTable_T) : string => {
+  const { points } = poliTable;
+  const difCoefs = divDifCoefs(poliTable);
+  
+  let res = "";
+
+  for (let i = 0; i < points.length; i++) {
+    let num = difCoefs[i];
+    let addition = (num < 0 ? "" : "+") + num.toFixed(5);
+
+    for (let j = 0; j < i; j++) {
+      let numNeg = points[j] < 0;
+      addition += `*(x${numNeg ? "+" : "-"}${Number.parseFloat(Math.abs(points[j]).toFixed(5))})`;
+    }
+    res += addition;
+  }
+  return res;
+}

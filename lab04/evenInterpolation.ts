@@ -35,7 +35,9 @@ const factorial = (n : number) : number => {
     { return n * factorial( n - 1 ); }
 }
 
-const createNewtonPolynom = (points : Array<number>, difCoefs : Array<number>) : ((x : number) => number) => {
+export const createEvenNewtonPolynom = (poliTable : polinomialTable_T) : ((x : number) => number) => {
+  const { points, f_vals } = poliTable;
+  const difCoefs = finiteDifCoefs(f_vals);
   const h = new BigDecimal(points[1]).subtract(points[0]).toNumber();
   
   return (x : number) => {
@@ -54,6 +56,22 @@ const createNewtonPolynom = (points : Array<number>, difCoefs : Array<number>) :
   }
 }
 
-export default (poliTable : polinomialTable_T) : ((x : number) => number) => {
-  return createNewtonPolynom(poliTable.points, finiteDifCoefs(poliTable.f_vals));
+export const createEvenNewtonPolynomStr = (poliTable : polinomialTable_T) : string => {
+  const { points, f_vals } = poliTable;
+  const difCoefs = finiteDifCoefs(f_vals);
+  const h = new BigDecimal(points[1]).subtract(points[0]).toNumber().toFixed(5);
+  
+  let p0 = points[0];
+  const t = "((x" + (p0 < 0 ? "" : "+") + p0.toFixed(5) + ") /" + h + ")";
+
+  let res = "";
+  for (let i = 0; i < points.length; i++) {
+    let addition = "+(" + difCoefs[i].toFixed(5) + "/" + factorial(i) + ")";
+    for (let j = 0; j < i; j++) {
+      addition += `*(${t}-${j})`;
+    }
+    res += addition;
+  }
+
+  return `(${res})*${h} - ${p0}`;
 }
