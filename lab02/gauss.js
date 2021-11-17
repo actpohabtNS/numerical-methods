@@ -8,11 +8,11 @@ const findBiggestColumn = (matrix, col) => {
   }
 
   let biggestIdx = col;
-  let biggest = matrix[col][col];
+  let biggest = Math.abs(matrix[col][col]);
   
   for (let i = col; i < matrix.length; i++) {
     const row = matrix[i];
-    if (row[col] > biggest) {
+    if (Math.abs(row[col]) > biggest) {
       biggestIdx = i;
     }
   }
