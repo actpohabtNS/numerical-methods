@@ -22,6 +22,7 @@ const genEvenlyTable = (n : number) : polinomialTable_T => {
       f_vals.push(f(p.toNumber()));
     }
     points[n - 1] = UPPER_LIMIT;
+    f_vals[n - 1] = f(UPPER_LIMIT);
   }
 
   return { points, f_vals };
