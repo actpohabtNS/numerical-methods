@@ -12,7 +12,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "prompt-sync": "^4.1.6"
+    "prompt-sync": "^4.1.6",
+    "tdma": "^1.0.1"
   },
   "devDependencies": {
     "@types/prompt-sync": "^4.1.1",
